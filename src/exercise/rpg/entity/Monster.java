@@ -7,12 +7,14 @@ public class Monster {
     private int maxHP;
     private int currentHP;
     private int attackPower;
+    private Random random;
 
-    public Monster(int maxHP) {
+    public Monster() {
+        this.random = new Random();
         this.name = randomNameMonster();
-        this.maxHP = 10;
+        this.maxHP = randomHP();
         currentHP = maxHP;
-        attackPower = 1;
+        this.attackPower = randomPower();
     }
 
     public void attack(Player player) {
@@ -55,5 +57,15 @@ public class Monster {
         }
         return name;
     }
+
+    private int randomHP() {
+        return random.nextInt(8, 13);
+    }
+
+    private int randomPower() {
+
+        return random.nextInt(1, 5);
+    }
 }
+
 

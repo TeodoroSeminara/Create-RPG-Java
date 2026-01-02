@@ -1,16 +1,20 @@
 package exercise.rpg.entity;
 
+import java.util.Random;
+
 public class Player {
     private String name;
     private int maxHP;
     private int currentHP;
     private int attackPower;
+    private Random random;
 
-    public Player(String name, int maxHP) {
+    public Player(String name) {
+        this.random = new Random();
         this.name = name;
-        this.maxHP = maxHP;
+        this.maxHP = randomHP();
         currentHP = maxHP;
-        attackPower = 1;
+        this.attackPower = randomPower();
     }
 
     public void attack(Monster monster) {
@@ -52,5 +56,14 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    private int randomHP() {
+        return random.nextInt(8, 13);
+    }
+
+    private int randomPower() {
+
+        return random.nextInt(1, 5);
     }
 }

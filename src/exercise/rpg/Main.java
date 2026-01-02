@@ -9,26 +9,30 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        Random random = new Random();
 
         System.out.print("Inserisci il tuo nome: ");
         String playerName = input.nextLine();
-        Player player = new Player(playerName, 10);
-        Monster monster = new Monster( 10);
 
-        while (monster.isAlive() && player.isAlive()){
+
+        // Creazione player e monstre
+        Player player = new Player(playerName);
+        Monster monster = new Monster();
+
+        while (monster.isAlive() && player.isAlive()) {
 
             System.out.println(player.getName() + " seleziona una mossa:");
 
             System.out.print("1 per attaccare, 2 per curare: ");
             int moveSelect = input.nextInt();
 
-            if (moveSelect == 1){
+            if (moveSelect == 1) {
                 player.attack(monster);
             } else {
                 player.heal();
             }
 
-            if (monster.isAlive()){
+            if (monster.isAlive()) {
                 monster.attack(player);
             }
 
