@@ -62,6 +62,19 @@ public class Player {
         }
     }
 
+    public boolean run() {
+        int run = random.nextInt(0, 2);
+        boolean gameStop = false;
+        if (run == 1) {
+            System.out.println("Sei riuscito a fuggire");
+            gameStop = true;
+        } else {
+            System.out.println("Non sei riuscito a scappare, il mostro attacca");
+        }
+        return gameStop;
+    }
+
+
     public String getName() {
         return name;
     }

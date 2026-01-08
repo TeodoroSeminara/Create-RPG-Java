@@ -13,26 +13,37 @@ public class Main {
 
         System.out.print("Inserisci il tuo nome: ");
         String playerName = input.nextLine();
+        boolean gameRunning = true;
 
 
-        // Creazione player e monstre
+        // Creazione player e monster
         Player player = new Player(playerName);
         Monster monster = new Monster();
 
-        while (monster.isAlive() && player.isAlive()) {
+
+        while (monster.isAlive() && player.isAlive() && gameRunning) {
 
             System.out.println(player.getName() + " seleziona una mossa:");
 
-            System.out.print("1 per attaccare, 2 per curare: ");
+            System.out.print("1 per attaccare, 2 per curare, 3 prova a fuggire :");
             int moveSelect = input.nextInt();
 
-            if (moveSelect == 1) {
-                player.attack(monster);
-            } else {
-                player.heal();
+            switch (moveSelect) {
+                case 1:
+                    player.attack(monster);
+                    break;
+                case 2:
+                    player.heal();
+                    break;
+                case 3:
+                    boolean playerEscape = player.run();
+                    if (playerEscape){
+                        gameRunning = false;
+                    }
+                    break;
             }
 
-            if (monster.isAlive()) {
+            if (monster.isAlive() && gameRunning) {
                 monster.attack(player);
             }
 
