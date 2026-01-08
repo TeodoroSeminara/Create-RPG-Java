@@ -21,7 +21,7 @@ public class Main {
         Monster monster = new Monster();
 
 
-        while (monster.isAlive() && player.isAlive() && gameRunning) {
+        while (player.isAlive() && gameRunning) {
 
             System.out.println(player.getName() + " seleziona una mossa:");
 
@@ -45,6 +45,15 @@ public class Main {
 
             if (monster.isAlive() && gameRunning) {
                 monster.attack(player);
+            } else {
+                System.out.println("Hai ucciso il mostro");
+                System.out.println("Attenzione è spawnato un nuovo avversario");
+                monster = Monster.generateNewMonster();
+                System.out.println(monster);
+            }
+
+            if (!player.isAlive()){
+                System.out.println("GAME OVAHR");
             }
 
             player.printStatus();

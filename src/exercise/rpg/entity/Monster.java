@@ -58,6 +58,10 @@ public class Monster {
         return name;
     }
 
+    public static Monster generateNewMonster(){
+        return new Monster();
+    }
+
     private int randomHP() {
         return random.nextInt(8, 13);
     }
@@ -65,6 +69,11 @@ public class Monster {
     private int randomPower() {
 
         return random.nextInt(1, 5);
+    }
+
+    @Override
+    public String toString() {
+        return "Il nome del mostro è: " + name;
     }
 }
 
