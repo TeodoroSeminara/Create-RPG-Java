@@ -3,11 +3,11 @@ package exercise.rpg.entity;
 import java.util.Random;
 
 public class Player {
+    private Random random;
     private String name;
     private int maxHP;
     private int currentHP;
     private int attackPower;
-    private Random random;
 
     public Player(String name) {
         this.random = new Random();
@@ -19,7 +19,15 @@ public class Player {
 
     public void attack(Monster monster) {
         System.out.println("Hai attaccato il mostro");
-        monster.takeDamage(attackPower);
+        int criticalChance = random.nextInt(0, 5);
+
+        if (criticalChance == 2) {
+            monster.takeDamage(attackPower * 2);
+            System.out.println("Critical Hit");
+        } else {
+            monster.takeDamage(attackPower);
+        }
+
     }
 
     public void takeDamage(int damage) {
@@ -63,7 +71,7 @@ public class Player {
     }
 
     private int randomPower() {
-
         return random.nextInt(1, 5);
     }
+
 }
