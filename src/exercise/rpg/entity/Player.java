@@ -8,6 +8,7 @@ public class Player {
     private int maxHP;
     private int currentHP;
     private int attackPower;
+    private int defenceArmor;
 
     public Player(String name) {
         this.random = new Random();
@@ -15,10 +16,11 @@ public class Player {
         this.maxHP = randomHP();
         currentHP = maxHP;
         this.attackPower = randomPower();
+        this.defenceArmor = randomDefence();
     }
 
-    public void attack(Monster monster) {
-        System.out.println("Hai attaccato il mostro");
+    public void lightAttack(Monster monster) {
+        System.out.println("Usi attacco leggero sul mostro");
         int criticalChance = random.nextInt(0, 5);
 
         if (criticalChance == 2) {
@@ -27,12 +29,27 @@ public class Player {
         } else {
             monster.takeDamage(attackPower);
         }
+    }
 
+    public void heavyAttack(Monster monster) {
+        System.out.println("Usi attacco pesante sul mostro");
+        int probabilyAttacckSuccess = random.nextInt(0, 2);
+
+        if (probabilyAttacckSuccess == 1) {
+            monster.takeDamage(attackPower * 2);
+        } else {
+            System.out.println("Non sei riuscito a sferrare il colpo");
+        }
     }
 
     public void takeDamage(int damage) {
-        System.out.println(name + " ha preso " + damage + " di danno");
-        currentHP -= damage;
+        int attackDefence = damage - this.defenceArmor;
+        if (attackDefence < 0) {
+            System.out.println("Non hai inflitto danni");
+        } else {
+            currentHP -= attackDefence;
+        }
+        System.out.println(name + " ha preso " + attackDefence + " di danno");
     }
 
     public boolean isAlive() {
@@ -58,7 +75,7 @@ public class Player {
         if (!isAlive()) {
             System.out.println(name + " è morto");
         } else {
-            System.out.println(name + " HP:" + currentHP + "/" + maxHP);
+            System.out.println(name + " HP:" + currentHP + "/" + maxHP + "(Attacco: " + attackPower + " Difesa: " + defenceArmor);
         }
     }
 
@@ -74,7 +91,6 @@ public class Player {
         return gameStop;
     }
 
-
     public String getName() {
         return name;
     }
@@ -84,6 +100,10 @@ public class Player {
     }
 
     private int randomPower() {
+        return random.nextInt(1, 5);
+    }
+
+    private int randomDefence() {
         return random.nextInt(1, 5);
     }
 

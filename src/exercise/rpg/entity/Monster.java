@@ -8,6 +8,7 @@ public class Monster {
     private int currentHP;
     private int attackPower;
     private Random random;
+    private int defenceArmor;
 
     public Monster() {
         this.random = new Random();
@@ -15,31 +16,36 @@ public class Monster {
         this.maxHP = randomHP();
         currentHP = maxHP;
         this.attackPower = randomPower();
+        this.defenceArmor = randomDefence();
     }
 
-    public void attack(Player player) {
+    public void lightAttack(Player player) {
         System.out.println(player.getName() + " viene attaccato");
         player.takeDamage(attackPower);
     }
 
     public void takeDamage(int damage) {
-        System.out.println("Il mostro " + name + " ha preso " + damage + " di danno");
-        currentHP -= damage;
+        int attackDefence = damage - this.defenceArmor;
+        if (attackDefence < 0) {
+            System.out.println("Non hai inflitto danni");
+        } else {
+            currentHP -= attackDefence;
+        }
+        System.out.println("Il mostro " + name + " ha preso " + attackDefence + " di danno");
     }
 
     public boolean isAlive() {
         return currentHP > 0;
     }
 
-
     public void printStatus() {
         if (!isAlive()) {
             System.out.println(name + " è morto");
         } else {
-            System.out.println(name + " HP:" + currentHP + "/" + maxHP);
+            System.out.println(name + " HP:" + currentHP + "/" + maxHP + "(Attacco: " + attackPower + " Difesa: " + defenceArmor);
         }
-    }
 
+    }
 
     private String randomNameMonster() {
         String upperCase = "QWERTYUIOPASDFGHJKLZXCVBNM";
@@ -58,7 +64,7 @@ public class Monster {
         return name;
     }
 
-    public static Monster generateNewMonster(){
+    public static Monster generateNewMonster() {
         return new Monster();
     }
 
@@ -70,6 +76,19 @@ public class Monster {
 
         return random.nextInt(1, 5);
     }
+
+    private int randomDefence() {
+        return random.nextInt(1, 5);
+    }
+
+    public static Monster[] generateMonsterList() {
+        Monster[] monsterList = new Monster[5];
+        for (int i = 0; i < monsterList.length; i++) {
+            monsterList[i] = generateNewMonster();
+        }
+        return monsterList;
+    }
+
 
     @Override
     public String toString() {
